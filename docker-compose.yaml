@@ -2,8 +2,23 @@
 services:
   nginx:
     build:
-      context: .
+      context: ./nginx/
+    container_name: website
     ports:
-      - 8080:80
+      - 80:80
     volumes:
-      - ./html/:/usr/share/nginx/html/
+      - ./nginx/html/:/usr/share/nginx/html/
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    
+  dns:
+    build:
+      context: ./dns/
+    container_name: dns
+    restart: always
+    ports:
+      - 53:53
+      - 53:53/udp
+    volumes:
+      - ./dns/named.conf:/etc/bind/named.conf
+      - ./dns/zone/:/etc/bind/zone/
+    command: named -c /etc/bind/named.conf -g -u named

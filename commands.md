@@ -19,3 +19,10 @@ CHAPTER 1
         docker build -t webserver . ---> Will build a image with the name webserver with the current    config.
         
     
+Chapter 2
+
+1) docker top website ---> To view the running process in a container. Nginx has a master process and 4 worker process.
+
+2) ps -C nginx -f  ----> With external library procps we can see it more clearly, the master and worker processes.
+
+3) nginx -s reload ----> To reload the nginx (master process) based on the configuration. -s stand for signal.
