@@ -1,17 +1,34 @@
 
 services:
-  web:
+  web1:
     build:
       context: ./django/
     command: gunicorn demo.wsgi:application --bind 0.0.0.0:8000
-    container_name: demo
+    container_name: demo1
     volumes:
       - ./django/:/usr/src/app/
       - static_files:/usr/src/app/staticfiles/
     env_file: 
       - ./.ini/dev.env
+    environment:
+      - CONTAINER_VERSION=1
     expose:
       - 8000
+  
+  web2:
+    build:
+      context: ./django/
+    command: gunicorn demo.wsgi:application --bind 0.0.0.0:8080
+    container_name: demo2
+    volumes:
+      - ./django/:/usr/src/app/
+      - static_files:/usr/src/app/staticfiles/
+    env_file: 
+      - ./.ini/dev.env
+    environment:
+      - CONTAINER_VERSION=2
+    expose:
+      - 8080
 
   nginx:
     build:
